@@ -15,7 +15,7 @@ class Fitter {
     fit() {
         let el;
 
-        if(this.options.shadowRoot) {
+        if (this.options.shadowRoot) {
             el = typeof this.options.element === 'string' ? this.options.shadowRoot.querySelector(this.options.element) : this.options.element;
         }
         else {
@@ -36,21 +36,23 @@ class Fitter {
             for (let c = parseFloat(fontSize); c < this.options.max; c++) {
                 let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
                 if (r > el.clientWidth) {
-                    el.style.fontSize = c - 1 > this.options.max ? this.options.max : c - 1;
+                    el.style.fontSize = `${c - 1 > this.options.max ? this.options.max : c - 1}px`;
                     return;
                 }
             }
-            el.style.fontSize = this.options.max;
+            el.style.fontSize = `${this.options.max}px`;
+            return;
         }
         else {
             for (let c = this.options.min; c < parseFloat(fontSize); c++) {
                 let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
                 if (r > el.clientWidth) {
-                    el.style.fontSize = c - 1 < this.options.min ? this.options.min : c - 1;
+                    el.style.fontSize = `${c - 1 < this.options.min ? this.options.min : c - 1}px`;
                     return;
                 }
             }
-            el.style.fontSize = this.options.min;
+            el.style.fontSize = `${this.options.min}px`;
+            return;
         }
     }
 
@@ -58,11 +60,12 @@ class Fitter {
         let canvas = this.canvas || (this.canvas = document.createElement('canvas'));
         let context = canvas.getContext('2d');
         context.font = font;
-        let metrics = context.measureText(text);
-        return metrics.width;
+        return context.measureText(text).width;
     }
 
     set(options) {
         this.options = Object.assign(this.options, options);
     }
 }
+
+export default Fitter;
