@@ -13,7 +13,15 @@ class Fitter {
     }
 
     fit() {
-        let el = typeof this.options.element === 'string' ? window.document.querySelector(this.options.element) : this.options.element;
+        let el;
+
+        if(this.options.shadowRoot) {
+            el = typeof this.options.element === 'string' ? this.options.shadowRoot.querySelector(this.options.element) : this.options.element;
+        }
+        else {
+            el = typeof this.options.element === 'string' ? window.document.querySelector(this.options.element) : this.options.element;
+        }
+
         let style = window.getComputedStyle(el, null);
         let fontSize = style.getPropertyValue('font-size');
         let fontWeight = style.getPropertyValue('font-weight');
@@ -58,13 +66,3 @@ class Fitter {
         this.options = Object.assign(this.options, options);
     }
 }
-
-setTimeout(() => {
-    let f = new Fitter({ min: 12, max: 64, element: '.js-fit' });
-
-    setTimeout(() => {
-        document.querySelector('.js-fit').innerText = 'Lorem ipsum asdas das fas fa sga sg absfd asfahsf asfpia sfasf';
-        f.set({ min: 16 });
-        f.fit();
-    }, 1e3)
-}, 1e3);
