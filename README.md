@@ -4,7 +4,7 @@
 - [Example](https://roquef.github.io/Fitter.html)
 
 - Install:
-```s
+```console
 npm i fitter-js
 ```
 
@@ -14,7 +14,7 @@ npm i fitter-js
 import Fitter from 'fitter-js';
 
 let fitter = new Fitter({
-	min: 12, // px
+    min: 12, // px
     max: 32, // px
     element: '.js-fitter' // selector string or node
 });
