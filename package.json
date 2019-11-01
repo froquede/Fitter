@@ -1,0 +1,25 @@
+{
+  "name": "fitter-js",
+  "version": "1.0.0",
+  "description": "Simple text fitting, supports shadow DOM",
+  "main": "Fitter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roquef/fitter.git"
+  },
+  "keywords": [
+    "fit",
+    "text",
+    "fitter",
+    "fitting"
+  ],
+  "author": "roquef",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/roquef/fitter/issues"
+  },
+  "homepage": "https://github.com/roquef/fitter#readme"
+}
