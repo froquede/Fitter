@@ -1,7 +1,7 @@
 # Fitter
 > Simple text fitting, supports shadow DOM
 
-- [Example](https://roquef.github.io/Fitter.html){:target="_blank"}
+- <a href="https://roquef.github.io/Fitter.html" target="_blank">Example</a>
 
 ### Install:
 ```console
