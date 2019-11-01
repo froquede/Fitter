@@ -1,12 +1,13 @@
 # Fitter
 > Simple text fitting, supports shadow DOM
 
-- install
+- Install:
 ```s
 npm i fitter-js
 ```
 
-- import and use
+
+- Import and use:
 ```javascript
 import Fitter from 'fitter-js';
 
@@ -17,14 +18,22 @@ let fitter = new Fitter({
 });
 ```
 
-- With shadow DOM
+
+- With shadow DOM:
 ```javascript
 let fitter = new Fitter({
     shadowRoot: yourShadowRoot
 });
 ```
 
-- Update
+
+- Update:
 ```javascript
 fitter.fit();
+```
+
+
+- Set:
+```javascript
+fitter.set({ min: 10 });
 ```
