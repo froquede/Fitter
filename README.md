@@ -1,6 +1,8 @@
 # Fitter
 > Simple text fitting, supports shadow DOM
 
+- [Example](https://roquef.github.io/Fitter.html)
+
 - Install:
 ```s
 npm i fitter-js
