@@ -2,6 +2,7 @@
 > Simple text fitting, supports shadow DOM
 
 - <a href="https://roquef.github.io/Fitter.html" target="_blank">Example</a>
+- <a href="https://roquef.github.io/Fitter_Responsive.html" target="_blank">Responsive Example</a>
 
 ### Install:
 ```console
