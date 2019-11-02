@@ -9,11 +9,9 @@ npm i fitter-js
 ```
 
 
-### Import and use:
+### Basic usage:
 ```javascript
-import Fitter from 'fitter-js';
-
-let fitter = new Fitter({
+new Fitter({
     min: 12, // px
     max: 32, // px
     element: '.js-fitter' // selector string or node
