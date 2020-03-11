@@ -8,51 +8,64 @@ class Fitter {
         return {
             element: '[data-fitter]',
             min: 12,
-            max: 64
+            max: 64,
+            multiline: false,
         }
     }
 
     fit() {
-        let el;
-
+        let elements;
         if (this.options.shadowRoot) {
-            el = typeof this.options.element === 'string' ? this.options.shadowRoot.querySelector(this.options.element) : this.options.element;
+            elements = typeof this.options.element === 'string' ? this.options.shadowRoot.querySelectorAll(this.options.element) : this.options.element;
         }
         else {
-            el = typeof this.options.element === 'string' ? window.document.querySelector(this.options.element) : this.options.element;
+            elements = typeof this.options.element === 'string' ? window.document.querySelectorAll(this.options.element) : this.options.element;
         }
 
-        let style = window.getComputedStyle(el, null);
-        let fontSize = style.getPropertyValue('font-size');
-        let fontWeight = style.getPropertyValue('font-weight');
-        let fontFamily = style.getPropertyValue('font-family');
-        let textSize = this.getTextWidth(el.innerText, `${fontWeight} ${fontSize} ${fontFamily}`);
+        for (const el of elements) {
+            delete el.fitter_set;
+            let style = window.getComputedStyle(el, null);
+            let fontSize = style.getPropertyValue('font-size');
+            let fontWeight = style.getPropertyValue('font-weight');
+            let fontFamily = style.getPropertyValue('font-family');
+            let textSize = this.getTextWidth(el.innerText, `${fontWeight} ${fontSize} ${fontFamily}`);
 
-        el.style.overflow = 'hidden';
-        el.style['text-overflow'] = 'ellipsis';
-        el.style['white-space'] = 'nowrap';
+            el.style.overflow = 'hidden';
+            el.style['text-overflow'] = 'ellipsis';
+            el.style['white-space'] = this.options.multiline ? 'normal' : 'nowrap';
 
-        if (textSize < el.clientWidth) {
-            for (let c = parseFloat(fontSize); c < this.options.max; c++) {
-                let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
-                if (r > el.clientWidth) {
-                    el.style.fontSize = `${c - 1 > this.options.max ? this.options.max : c - 1}px`;
-                    return;
+            let elSize = el.clientWidth;
+            let canGrow = window.getComputedStyle(el.parentNode, null).getPropertyValue('max-width');
+            elSize = canGrow && canGrow !== 'none' ? parseFloat(canGrow) : elSize;
+
+            if (textSize < elSize) {
+                for (let c = parseFloat(fontSize); c < this.options.max; c++) {
+                    let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
+                    if (r > elSize) {
+                        el.style.fontSize = `${c - 1 > this.options.max ? this.options.max : c - 1}px`;
+                        el.fitter_set = true
+                        break;
+                    }
+                }
+
+                if (!el.fitter_set) {
+                    el.style.fontSize = `${this.options.max}px`;
                 }
             }
-            el.style.fontSize = `${this.options.max}px`;
-            return;
-        }
-        else {
-            for (let c = this.options.min; c < parseFloat(fontSize); c++) {
-                let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
-                if (r > el.clientWidth) {
-                    el.style.fontSize = `${c - 1 < this.options.min ? this.options.min : c - 1}px`;
-                    return;
+            else {
+                for (let c = this.options.min; c < parseFloat(fontSize); c++) {
+                    let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
+                    if (r > elSize) {
+                        el.style.fontSize = `${c - 1 < this.options.min ? this.options.min : c - 1}px`;
+                        el.fitter_set = true
+                        break;
+                    }
+                }
+                
+                if (!el.fitter_set) {
+                    el.style.fontSize = `${this.options.min}px`;
                 }
             }
-            el.style.fontSize = `${this.options.min}px`;
-            return;
         }
     }
 
