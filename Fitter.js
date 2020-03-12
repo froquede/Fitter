@@ -83,7 +83,7 @@ class Fitter {
     listener(el) {
         if (this.options.listener) {
             try {
-                this.options.listener(el, el.style.fontSize);
+                this.options.listener(el, +(`${el.style.fontSize}`.split('px').join('')));
             } catch (err) { }
         }
     }
