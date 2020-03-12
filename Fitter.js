@@ -43,13 +43,15 @@ class Fitter {
                     let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
                     if (r > elSize) {
                         el.style.fontSize = `${c - 1 > this.options.max ? this.options.max : c - 1}px`;
-                        el.fitter_set = true
+                        el.fitter_set = true;
+                        this.listener(el);
                         break;
                     }
                 }
 
                 if (!el.fitter_set) {
                     el.style.fontSize = `${this.options.max}px`;
+                    this.listener(el);
                 }
             }
             else {
@@ -57,13 +59,15 @@ class Fitter {
                     let r = this.getTextWidth(el.innerText, `${fontWeight} ${c}px ${fontFamily}`);
                     if (r > elSize) {
                         el.style.fontSize = `${c - 1 < this.options.min ? this.options.min : c - 1}px`;
-                        el.fitter_set = true
+                        el.fitter_set = true;
+                        this.listener(el);
                         break;
                     }
                 }
-                
+
                 if (!el.fitter_set) {
                     el.style.fontSize = `${this.options.min}px`;
+                    this.listener(el);
                 }
             }
         }
@@ -74,6 +78,14 @@ class Fitter {
         let context = canvas.getContext('2d');
         context.font = font;
         return context.measureText(text).width;
+    }
+
+    listener(el) {
+        if (this.options.listener) {
+            try {
+                this.options.listener(el, el.style.fontSize);
+            } catch (err) { }
+        }
     }
 
     set(options) {
