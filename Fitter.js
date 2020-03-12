@@ -36,7 +36,7 @@ class Fitter {
 
             let elSize = el.clientWidth;
             let canGrow = window.getComputedStyle(el.parentNode, null).getPropertyValue('max-width');
-            elSize = canGrow && canGrow !== 'none' ? parseFloat(canGrow) : elSize;
+            elSize = canGrow && canGrow !== 'none' ? parseFloat(this.getMaxGrowth(canGrow, elSize, el)) : elSize;
 
             if (textSize < elSize) {
                 for (let c = parseFloat(fontSize); c < this.options.max; c++) {
@@ -78,6 +78,16 @@ class Fitter {
         let context = canvas.getContext('2d');
         context.font = font;
         return context.measureText(text).width;
+    }
+
+    getMaxGrowth(canGrow, size, el) {
+        if(canGrow.split('%').length > 1) {
+            let percentage = canGrow.split('%')[0];
+            return (el.parentNode.clientWidth * (percentage / 100));
+        }
+        else {
+            return +(`${canGrow}`.split('px').join(''));
+        }
     }
 
     listener(el) {

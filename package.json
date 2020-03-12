@@ -1,6 +1,6 @@
 {
   "name": "fitter-js",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Simple text fitting, supports shadow DOM",
   "main": "Fitter.js",
   "scripts": {
